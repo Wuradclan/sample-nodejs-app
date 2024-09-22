@@ -1,7 +1,7 @@
-//import express from 'express';
+import express from 'express';
 import path from 'path';
 import {fileURLToPath} from 'url';
-var express = require('express');
+//var express = require('express');
 var app = express();
 //this line also added
 app.use(express.static('public')); 
