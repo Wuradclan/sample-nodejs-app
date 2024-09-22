@@ -7,7 +7,11 @@ var app = express();
 //this line also added
 app.use(express.static('public')); 
 app.get('/', function (req, res) {
-  res.send('marker.html');
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+  const _retfile = path.join(__dirname, 'marker.html');
+ 
+  res.sendFile(_retfile);
 });
 // new code to show html page
 app.get("/showfile", (req, res, next) => { 
