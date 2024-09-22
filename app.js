@@ -1,7 +1,8 @@
 
-var express = require('express');
-const path = require('path');
-const { fileURLToPath } = require("url");
+import express from 'express';
+import path from 'path';
+import {fileURLToPath} from 'url';
+
 var app = express();
 //this line also added
 app.use(express.static('public')); 
