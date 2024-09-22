@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebAR Marker Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .upload-form {
+            padding: 20px;
+            border: 1px solid #ccc;
+            display: inline-block;
+            margin: 10px auto;
+            border-radius: 10px;
+        }
+        input[type="file"], input[type="submit"] {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>WebAR Marker Generator</h1>
+
+    <div class="upload-form">
+        <form id="marker-form" method="POST" enctype="multipart/form-data">
+            <input type="file" name="image" accept="image/*" required><br><br>
+            <input type="submit" value="Generate Marker">
+        </form>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        // Client-side handling of form submission
+        document.getElementById('marker-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            var formData = new FormData(this);
+            fetch('/generate-marker', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'marker.patt';
+                link.textContent = 'Download Marker';
+                document.getElementById('result').appendChild(link);
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+
+</body>
+</html>
