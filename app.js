@@ -1,20 +1,24 @@
-import express from 'express';
+
+var express = require('express');
 import path from 'path';
 import {fileURLToPath} from 'url';
-
 var app = express();
-app.use(express.static('public')); // this is added!
-app.listen(3000, () => {
- console.log("Server running on port 3000");
+//this line also added
+app.use(express.static('public')); 
+app.get('/', function (req, res) {
+  res.send('marker.html');
 });
-app.get("/", (req, res) => {
- res.send('Hello World!')
-});
+// new code to show html page
 app.get("/showfile", (req, res, next) => { 
+  // show the page
+const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+  const _retfile = path.join(__dirname, 'marker.html');
  
- const __filename = fileURLToPath(import.meta.url);
- const __dirname = path.dirname(__filename);
- const _retfile = path.join(__dirname, 'marker.html');
+  res.sendFile(_retfile);
+ });
 
- res.sendFile(_retfile);
+ // old code
+app.listen(3000, function () {
+  console.log('Example app listening on port 3000!');
 });
